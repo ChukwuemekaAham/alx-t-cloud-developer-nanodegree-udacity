@@ -1,0 +1,357 @@
+{
+	"info": {
+		"_postman_id": "0c4e4253-b1c0-45fb-bf12-3916a0d37c24",
+		"name": "cloud-cdnd-c2-final",
+		"description": "Udagram image filtering microservice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authorized",
+			"item": [
+				{
+					"name": "200-Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "12c90d6e-c022-4afc-8d69-7c32ad30d767",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.OjpmZmZmOjEyNy4wLjAuMTE2.RgZfLONo5fdERDNhWMHy6JB2Oq5AJ3O7hJ3yRYn3VWk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/filteredimage?image_url=https://www.gstatic.com/webp/gallery/4.jpg",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"filteredimage"
+							],
+							"query": [
+								{
+									"key": "image_url",
+									"value": "https://www.gstatic.com/webp/gallery/4.jpg"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "400-image_url query parameter is missing",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "24d6f7b5-de0c-4d4e-97fa-55034ea42df3",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Validation message is not empty\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql('The image_url query parameter is required.');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.OjpmZmZmOjEyNy4wLjAuMTE2.RgZfLONo5fdERDNhWMHy6JB2Oq5AJ3O7hJ3yRYn3VWk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/filteredimage",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"filteredimage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "400-Invalid image url",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0deebf4c-ce2d-448b-9f5e-b45ea6c73d7f",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Validation message is not empty\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql('Invalid image url');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.OjpmZmZmOjEyNy4wLjAuMTE2.RgZfLONo5fdERDNhWMHy6JB2Oq5AJ3O7hJ3yRYn3VWk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/filteredimage?image_url=path",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"filteredimage"
+							],
+							"query": [
+								{
+									"key": "image_url",
+									"value": "path"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "500-Image does not exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0deebf4c-ce2d-448b-9f5e-b45ea6c73d7f",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"",
+									"pm.test(\"Validation message is not empty\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql('An error occurred while processing your image.');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.OjpmZmZmOjEyNy4wLjAuMTE2.RgZfLONo5fdERDNhWMHy6JB2Oq5AJ3O7hJ3yRYn3VWk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/filteredimage?image_url=https://www.gstatic.com/webp/gallery3/11.png",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"filteredimage"
+							],
+							"query": [
+								{
+									"key": "image_url",
+									"value": "https://www.gstatic.com/webp/gallery3/11.png"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Unauthorized",
+			"item": [
+				{
+					"name": "401-Unauthorized",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "12c90d6e-c022-4afc-8d69-7c32ad30d767",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"",
+									"pm.test(\"Validation message is not empty\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql('No authorization headers.');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/filteredimage?image_url=https://www.gstatic.com/webp/gallery/4.jpg",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"filteredimage"
+							],
+							"query": [
+								{
+									"key": "image_url",
+									"value": "https://www.gstatic.com/webp/gallery/4.jpg"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "500-Invalid Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "12c90d6e-c022-4afc-8d69-7c32ad30d767",
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"",
+									"pm.test(\"Validation message is not empty\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.eql('Failed to authenticate.');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "OjoxMTY.oV2Wn7k6Dl9uvrkZY9Tz_TZfo-UIpcO00f3eal2E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/filteredimage?image_url=https://www.gstatic.com/webp/gallery/4.jpg",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"filteredimage"
+							],
+							"query": [
+								{
+									"key": "image_url",
+									"value": "https://www.gstatic.com/webp/gallery/4.jpg"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "5887df52-1889-4e1f-82ee-054ab37b450a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "5e332dfe-c833-430b-b947-ab6c00311c28",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "3fa7446f-6a42-46d0-930a-5efe68afb89a",
+			"key": "HOST",
+			"value": "localhost:8082",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
